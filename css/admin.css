@@ -1,0 +1,45 @@
+body {
+    background-color: #0f172a;
+    color: #f1f5f9;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  input, textarea, select {
+    padding: 10px;
+    margin: 5px;
+    border: none;
+    border-radius: 8px;
+    width: 250px;
+  }
+  button {
+    padding: 10px;
+    margin: 5px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #3b82f6;
+    color: white;
+  }
+  .lista-produtos {
+    display: flex;
+flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  .produto {
+    background-color: #1e293b;
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  }
+  .produto img {
+    width: 120px;
+    border-radius: 10px;
+    margin: 10px 0;
+  }

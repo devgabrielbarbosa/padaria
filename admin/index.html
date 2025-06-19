@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin - Padaria LJ</title>
+  <link rel="stylesheet" href="../css/admin.css" />
+  <meta name="description" content="Administração de produtos da Padaria LJ" />
+  <meta name="keywords" content="admin, produtos, padaria, lanchonete" />
+  <meta name="author" content="GabrielLemos" />
+</head>
+<body>
+  <div id="tela-login">
+    <h2>Login do Administrador</h2>
+    <input type="text" id="usuario" placeholder="Usuário" />
+    <input type="password" id="senha" placeholder="Senha" />
+    <button onclick="fazerLogin()">Entrar</button>
+    <p id="erro-login" style="color: red;"></p>
+  </div>
+  
+  <div id="painel-admin" style="display: none;">
+    <h1>Painel Administrativo</h1>
+    <button onclick="fazerLogout()">Sair</button>
+    <!-- Coloque aqui o conteúdo do seu painel -->
+
+    <div>
+      <h2>Buscar Produtos:</h2>
+      <input
+        type="text"
+        id="busca-produto"
+        placeholder="Buscar produto por nome ou categoria..."
+        oninput="filtrarProdutos()"
+      />
+  
+  <!-- Filtro por categoria -->
+  <select id="filtro-categoria" onchange="filtrarProdutos()">
+    <option value="">Todas as Categorias</option>
+    <option value="combo">Combos</option> <!-- Corrigido de "tudo" para "combo" -->
+    <option value="hamburguer">Hambúrgueres</option>
+    <option value="pizza">Pizzas</option>
+    <option value="bebida">Bebidas</option>
+    <option value="lanche">Lanches</option>
+    <option value="doces">Doces</option>
+    <option value="salgado">Salgados</option>
+  </select>
+  
+      <button onclick="desativarFiltrados()" style="margin-left: 10px; background-color: #ef4444; color: white;">
+        Desativar Todos Filtrados
+      </button>
+      <button onclick="ativarFiltrados()" style="margin-left: 10px; background-color: #10b981; color: white;">
+        Ativar Todos Filtrados
+      </button>
+      <br /><br />
+    </div>
+    
+    <h2>Adicionar Produto</h2>
+    <form id="form-produto" onsubmit="event.preventDefault(); adicionarProduto();">
+      
+      <input type="text" id="nome" placeholder="Nome do produto" required /><br />
+    
+      <input type="number" id="preco" placeholder="Preço" step="0.01" required /><br />
+    
+      <select id="categoria" required>
+        <option value="" disabled selected>Selecione a categoria</option>
+        <option value="combo">Combo</option> <!-- Corrigido de "tudo" para "combo" -->
+        <option value="pizza">Pizzas</option>
+        <option value="doces">Doces</option>
+        <option value="bebida">Bebidas</option>
+        <option value="lanche">Lanche</option>
+        <option value="hamburguer">Hambúrguer</option>
+        <option value="salgado">Salgados</option>
+      </select><br />
+    
+      <textarea id="descricao" placeholder="Descrição do produto" required></textarea><br />
+    
+      <input type="file" id="imagem" accept="image/*" /><br />
+      <input type="hidden" id="imagemAtual"><br />
+      <img id="imagem-preview" style="display:none; max-width: 100px; margin-top: 10px;" alt="Preview da imagem" /><br />
+    
+      <button type="submit" id="btn-salvar">Salvar Produto</button>
+    </form>
+    
+    </form>
+  
+    <div id="lista-produtos"></div>
+  
+  </div>
+  
+ 
+  <!-- Firebase SDKs -->
+  <script type="module" src="../script/admin.js"></script>
+  <script src="../script/login.js"></script>
+</body>
+</html>
