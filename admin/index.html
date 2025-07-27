@@ -10,6 +10,7 @@
   <meta name="author" content="GabrielLemos" />
 </head>
 <body>
+  <!-- Tela de Login -->
   <div id="tela-login">
     <h2>Login do Administrador</h2>
     <input type="text" id="usuario" placeholder="Usuário" />
@@ -18,76 +19,93 @@
     <p id="erro-login" style="color: red;"></p>
   </div>
   
+  <!-- Painel Administrativo -->
   <div id="painel-admin" style="display: none;">
     <h1>Painel Administrativo</h1>
     <button onclick="fazerLogout()">Sair</button>
-    <!-- Coloque aqui o conteúdo do seu painel -->
+    
+    <div id="statusLojaContainer" style="margin-top:20px;">
+      <h2>Status da Loja</h2>
+      <p>Selecione o status da loja:</p>
+      <select id="statusLoja">
+        <option value="aberta">Aberta</option>
+        <option value="fechada">Fechada</option>
+      </select>
+    </div>
 
-    <div>
+    <div style="margin-top:30px;">
       <h2>Buscar Produtos:</h2>
       <input
         type="text"
         id="busca-produto"
         placeholder="Buscar produto por nome ou categoria..."
         oninput="filtrarProdutos()"
+        style="width: 300px; padding: 5px;"
       />
-  
-  <!-- Filtro por categoria -->
-  <select id="filtro-categoria" onchange="filtrarProdutos()">
-    <option value="">Todas as Categorias</option>
-    <option value="combo">Combos</option> <!-- Corrigido de "tudo" para "combo" -->
-    <option value="hamburguer">Hambúrgueres</option>
-    <option value="pizza">Pizzas</option>
-    <option value="bebida">Bebidas</option>
-    <option value="lanche">Lanches</option>
-    <option value="doces">Doces</option>
-    <option value="salgado">Salgados</option>
-  </select>
-  
-      <button onclick="desativarFiltrados()" style="margin-left: 10px; background-color: #ef4444; color: white;">
-        Desativar Todos Filtrados
-      </button>
-      <button onclick="ativarFiltrados()" style="margin-left: 10px; background-color: #10b981; color: white;">
-        Ativar Todos Filtrados
-      </button>
-      <br /><br />
-    </div>
-    
-    <h2>Adicionar Produto</h2>
-    <form id="form-produto" onsubmit="event.preventDefault(); adicionarProduto();">
-      
-      <input type="text" id="nome" placeholder="Nome do produto" required /><br />
-    
-      <input type="number" id="preco" placeholder="Preço" step="0.01" required /><br />
-    
-      <select id="categoria" required>
-        <option value="" disabled selected>Selecione a categoria</option>
-        <option value="combo">Combo</option> <!-- Corrigido de "tudo" para "combo" -->
+
+      <!-- Filtro por categoria -->
+      <select id="filtro-categoria" onchange="filtrarProdutos()" style="margin-left: 10px; padding: 5px;">
+        <option value="">Todas as Categorias</option>
+        <option value="combo">Combos</option>
+        <option value="hamburguer">Hambúrgueres</option>
         <option value="pizza">Pizzas</option>
-        <option value="doces">Doces</option>
         <option value="bebida">Bebidas</option>
-        <option value="lanche">Lanche</option>
-        <option value="hamburguer">Hambúrguer</option>
+        <option value="lanche">Lanches</option>
+        <option value="doces">Doces</option>
         <option value="salgado">Salgados</option>
-      </select><br />
-    
-      <textarea id="descricao" placeholder="Descrição do produto" required></textarea><br />
-    
-      <input type="file" id="imagem" accept="image/*" /><br />
-      <input type="hidden" id="imagemAtual"><br />
-      <img id="imagem-preview" style="display:none; max-width: 100px; margin-top: 10px;" alt="Preview da imagem" /><br />
-    
-      <button type="submit" id="btn-salvar">Salvar Produto</button>
-    </form>
-    
-    </form>
-  
-    <div id="lista-produtos"></div>
-  
+      </select>
+
+      <div style="margin-top: 10px;">
+        <button onclick="desativarFiltrados()" style="background-color: #ef4444; color: white; padding: 5px 10px; margin-right: 10px;">
+          Desativar Todos Filtrados
+        </button>
+        <button onclick="ativarFiltrados()" style="background-color: #10b981; color: white; padding: 5px 10px;">
+          Ativar Todos Filtrados
+        </button>
+      </div>
+    </div>
+
+    <div style="margin-top:40px;">
+      <h2>Adicionar / Editar Produto</h2>
+      <form id="form-produto" onsubmit="event.preventDefault(); adicionarProduto();">
+        <input type="text" id="nome" placeholder="Nome do produto" required style="width: 300px; padding: 5px; margin-bottom: 10px;" />
+        <br />
+
+        <input type="number" id="preco" placeholder="Preço" step="0.01" required style="width: 150px; padding: 5px; margin-bottom: 10px;" />
+        <br />
+
+        <select id="categoria" required style="width: 200px; padding: 5px; margin-bottom: 10px;">
+          <option value="" disabled selected>Selecione a categoria</option>
+          <option value="combo">Combo</option>
+          <option value="pizza">Pizzas</option>
+          <option value="doces">Doces</option>
+          <option value="bebida">Bebidas</option>
+          <option value="lanche">Lanches</option>
+          <option value="hamburguer">Hambúrguer</option>
+          <option value="salgado">Salgados</option>
+        </select>
+        <br />
+
+        <textarea id="descricao" placeholder="Descrição do produto" required style="width: 300px; height: 80px; padding: 5px; margin-bottom: 10px;"></textarea>
+        <br />
+
+        <input type="file" id="imagem" accept="image/*" style="margin-bottom: 10px;" />
+        <br />
+        <input type="hidden" id="imagemAtual" />
+        <img id="imagem-preview" style="display:none; max-width: 100px; margin-top: 10px;" alt="Preview da imagem" />
+        <br />
+
+        <button type="submit" id="btn-salvar" style="padding: 8px 15px;">Salvar Produto</button>
+      </form>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <h2>Produtos Cadastrados</h2>
+      <ul id="lista-produtos" style="list-style: none; padding-left: 0;"></ul>
+    </div>
   </div>
-  
- 
-  <!-- Firebase SDKs -->
+
+  <!-- Firebase SDKs e seus scripts -->
   <script type="module" src="../script/admin.js"></script>
   <script src="../script/login.js"></script>
 </body>

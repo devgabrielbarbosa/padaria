@@ -1,45 +1,297 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Corpo */
 body {
-    background-color: #0f172a;
-    color: #f1f5f9;
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    display: flex;
+  background-color: #fff;
+  color: #222;
+  padding: 20px;
+}
+
+/* Telas de login/admin */
+#tela-login, #painel-admin {
+  width: 1024px;
+  margin: auto;
+  background-color: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.08);
+}
+
+/* Títulos */
+h1, h2 {
+  color: #c10000;
+  margin: 20px;
+  text-align: center;
+}
+
+/* Inputs e selects */
+input, select, textarea {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+/* Botões padrão */
+button {
+  padding: 10px 20px;
+  background-color: #c10000;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #a70000;
+}
+
+/* Botões com cores específicas */
+button[style*="background-color: #ef4444"],
+button[style*="background-color: #10b981"] {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* Select status loja */
+.loja-status {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #fff3f3;
+  border: 1px solid #f5d1d1;
+  border-radius: 12px;
+}
+
+/* Preview da imagem */
+#imagem-preview {
+  border: 1px solid #ccc;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+/* Container geral dos produtos: grid com colunas flexíveis */
+#lista-produtos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  margin-top: 25px;
+  padding-bottom: 50px;
+}
+
+/* Card do produto */
+.detalhes-produto {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.12);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+  cursor: default;
+  height: 100%;
+}
+
+.detalhes-produto:hover {
+  box-shadow: 0 6px 18px rgb(193 0 0 / 0.4);
+}
+
+/* Imagem no topo do card */
+.detalhes-produto img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.detalhes-produto img:hover {
+  transform: scale(1.05);
+}
+
+/* Conteúdo interno */
+.conteudo {
+  padding: 15px 18px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+/* Título e preço */
+.detalhes-produto h3 {
+  font-size: 1.15rem;
+  color: #c10000;
+  font-weight: 700;
+  margin-bottom: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Parágrafos */
+.detalhes-produto p {
+  font-size: 0.85rem;
+  color: #444;
+  margin-bottom: 5px;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.detalhes-produto p strong {
+  color: #c10000;
+}
+
+/* Status destacado */
+.status-ativo {
+  color: #10b981;
+  font-weight: 600;
+}
+
+.status-inativo {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+/* Área dos botões - alinhados horizontalmente */
+.botoes {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 18px 18px;
+  gap: 10px;
+}
+
+/* Botões */
+.detalhes-produto button {
+  flex: 1;
+  padding: 8px 0;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  color: #fff;
+}
+
+/* Botão ativar/desativar */
+button.ativar {
+  background-color: #10b981;
+}
+
+button.desativar {
+  background-color: #ef4444;
+}
+
+button.editar {
+  background-color: #facc15;
+  color: #000;
+}
+
+/* Botão excluir */
+button.excluir {
+  background-color: #555;
+}
+
+/* Hover nos botões */
+button:hover {
+  filter: brightness(0.9);
+}
+
+/* Responsividade */
+
+@media (max-width: 768px) {
+  #tela-login, #painel-admin {
+  width: 600px;
+  margin: auto;
+  background-color: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.08);
+}
+
+  #lista-produtos {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+  }
+
+  .detalhes-produto img {
+    height: 140px;
+  }
+
+  .detalhes-produto h3 {
+    font-size: 1rem;
+  }
+
+  .detalhes-produto p {
+    font-size: 0.8rem;
+  }
+
+  .botoes {
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    gap: 10px;
   }
-  input, textarea, select {
-    padding: 10px;
-    margin: 5px;
-    border: none;
-    border-radius: 8px;
-    width: 250px;
-  }
-  button {
-    padding: 10px;
-    margin: 5px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    background-color: #3b82f6;
-    color: white;
-  }
-  .lista-produtos {
-    display: flex;
-flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
+
+  .detalhes-produto button {
     width: 100%;
+    padding: 10px;
+    font-size: 0.9rem;
   }
-  .produto {
-    background-color: #1e293b;
-    border-radius: 10px;
-    padding: 15px;
-    margin-top: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+/* Celulares e telas pequenas */
+@media (max-width: 600px) {
+
+  body {
+    padding: 10px;
   }
-  .produto img {
-    width: 120px;
-    border-radius: 10px;
-    margin: 10px 0;
+ #tela-login, #painel-admin {
+  max-width: 400px;
+  margin: auto;
+  background-color: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.08);
+}
+ 
+
+  #lista-produtos {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 15px;
   }
+
+  .detalhes-produto img {
+    height: 180px;
+  }
+
+  .detalhes-produto h3,
+  .detalhes-produto p {
+    white-space: normal;
+    overflow: visible;
+  }
+
+  .botoes {
+    flex-direction: column;
+  }
+
+  .detalhes-produto button {
+    font-size: 1rem;
+    padding: 12px 0;
+  }
+}

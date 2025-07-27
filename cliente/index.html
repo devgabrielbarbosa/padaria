@@ -2,27 +2,29 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Cardápio da Padaria LJ" />
   <meta name="keywords" content="padaria, lanchonete, cardápio, produtos" />
   <meta name="author" content="GabrielLemos" />
-  <link rel="stylesheet" href="../css/cliente.css">
+  <link rel="stylesheet" href="../css/cliente.css" />
   <title>Padaria LJ - Cardápio</title>
-
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
 <body id="app" class="darck">
-  <head>
-      <!-- Indicador de Carregamento -->
-  <div id="carregando" style="display: none;">Processando Pedido...</div>
+
+  <!-- Indicador de carregamento -->
+  <div id="carregando" style="display: none; padding:10px; background:#f3f3f3; text-align:center;">
+    Processando Pedido...
+  </div>
 
   <h1>Lanches da LJ - Cardápio</h1>
- 
-  <section >
+
+  <section>
     <h2>Buscar Produtos:</h2>
     <div class="filtros">
       <div>
         <select id="filtro-categoria" onchange="carregarProdutos()">
-          <option value="tudo">Tudo os Produtos</option>
+          <option value="tudo">Todos os Produtos</option>
           <option value="combo">Combo</option>
           <option value="pizza">Pizzas</option>
           <option value="salgado">Salgados</option>
@@ -36,69 +38,81 @@
         <button id="ver-sacola" onclick="abrirModal()">🛒(<span id="qtd-itens">0</span>)</button>
       </div>
       <div>
-        <button onclick="alternarTema()">🌗Tema</button>
+        <button onclick="alternarTema()">🌗 Tema</button>
       </div>
     </div>
   </section>
-  </head>
+
   <main>
     <ul id="lista-produtos"></ul>
+      <!-- Modal Sacola -->
+  <div id="modal-overlay" onclick="fecharModal()" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000;"></div>
 
-    <!-- Modal Sacola -->
-    <div id="modal-overlay" onclick="fecharModal()"></div>
-    <div id="modal">
-      <h2>Resumo do Pedido</h2>
+
+  <div id="modal" style="display:none; position:fixed; top:50%; left:50%; transform: translate(-50%, -50%);
+    background:#fff; padding:20px; width: 90%; max-width: 400px; box-shadow:0 0 10px rgba(0,0,0,0.25); z-index:1001; border-radius:8px;">
+    <h2>Resumo do Pedido</h2>
+
+    <label for="nome-cliente-modal">Seu nome:</label>
+    <input type="text" id="nome-cliente-modal" placeholder="Digite seu nome" required style="width: 100%; margin-bottom:10px;"/>
+
+    <label for="observacoes-modal">Observações:</label>
+    <textarea id="observacoes-modal" rows="3" placeholder="Ex: sem cebola, suco sem gelo..." style="width: 100%; margin-bottom:10px;"></textarea>
+
+    <label for="endereco-modal">📍 Seu endereço completo:</label>
+    <input type="text" id="endereco-modal" placeholder="Ex: Rua Bela Vista, nº 1051, Bairro Centro" required style="width: 100%; margin-bottom:10px;" />
+    <label for="complemento"></label>
+    <input type="text" id="complemento" placeholder="Complemento (opcional)" style="width: 100%; margin-bottom:10px;" />
+
+<label for="taxa-modal">Taxa de entrega:</label>
+    <p id="taxa-modal" style="margin-bottom: 10px;">R$ 0.00</p>
     
-      <!-- Campos Nome e Observações -->
-      <label for="nome-cliente-modal">Seu nome:</label>
-      <input type="text" id="nome-cliente-modal" placeholder="Digite seu nome" required>
+    <ul id="modal-carrinho" class="produtos-modal" style="margin-top: 15px; list-style-type:none; padding-left: 0;"></ul>
+    <p><strong>Total:</strong> R$ <span id="total-modal">0.00</span></p>
     
-      <label for="observacoes-modal">Observações:</label>
-      <textarea id="observacoes-modal" rows="3" placeholder="Ex: sem cebola, suco sem gelo..."></textarea>
-    
-      <!-- Carrinho dentro do modal -->
-      <ul id="modal-carrinho" class="produtos-modal"></ul>
-      <p><strong>Total:</strong> R$ <span id="total-modal">0.00</span></p>
-    
-      <!-- Botões no Modal -->
-      <button id="limpar-carrinho" onclick="limparCarrinho()">🗑️Limpar Carrinho</button>
+
+
+    <div style="margin-top: 15px; display: flex; justify-content: space-between;">
+      <button id="limpar-carrinho" onclick="limparCarrinho()">🗑️ Limpar Carrinho</button>
       <button id="finalizar-pedido" onclick="finalizarPedido()">📦 Finalizar Pedido</button>
-      <button class="fechar-modal" onclick="fecharModal()">Fechar</button>
     </div>
-    
-    <!-- Adicione essa nova div para capturar o resumo -->
-    
-  </main>
 
-  <div id="resumo-pedido">
-    <h3 id="resumo-nome"></h3>
-    <ul id="resumo-produtos"></ul>
-    <p><strong>Taxa de Entrega:</strong> R$ <span id="resumo-taxa">0.00</span></p>
-    <p><strong>Observações:</strong> <span id="resumo-observacoes"></span></p>
-    <p><strong>Total:</strong> R$ <span id="resumo-total"></span></p>
+    <button class="fechar-modal" onclick="fecharModal()" style="margin-top: 10px; display: block; width: 100%;">Fechar</button>
   </div>
 
-  <footer class="footer">
+  <!-- DIV que será convertida em imagem -->
+<div id="resumo-pedido" style="padding: 10px; background: white; width: 300px; border-radius: 5px; font-family: Arial, sans-serif; color: #333;">
+  <h3>Resumo do Pedido</h3>
+  <ul id="resumo-produtos" style="list-style-type: none; padding-left: 0; margin-bottom: 10px;">
+    <!-- Os produtos serão inseridos aqui via JS -->
+  </ul>
+  <p><strong>Taxa de entrega:</strong> <span id="resumo-taxa">R$ 0.00</span></p>
+  <p><strong>Observações:</strong> <span id="resumo-observacoes">Nenhuma</span></p>
+  <p><strong>Endereço:</strong> <span id="resumo-endereco">Não informado</span></p>
+  <p><strong>Complemento:</strong> <span id="resumo-complemento">Nenhum</span></p>
+  <p><strong>Nome do Cliente:</strong> <span id="resumo-nome">Anônimo</span></p>
+  <p><strong>Total:</strong> <span id="resumo-total">R$ 0.00</span></p>
+</div>
+
+  </main>
+  <footer class="footer" style="margin-top: 40px; text-align:center;">
     <p>&copy; 2025 Padaria LJ. Todos os direitos reservados.</p>
     <p>Desenvolvido por Gabriel Lemos</p>
     <p>Versão 0.1</p>
-    <div class="social-icons">
+    <div class="social-icons" style="margin-top: 10px;">
       <a href="https://wa.me/5563991300213" target="_blank" title="WhatsApp">
-        <img src="../assets/WhatsApp-logo.jpg" alt="WhatsApp">
+        <img src="../assets/WhatsApp-logo.jpg" alt="WhatsApp" style="width:24px;"/>
       </a>
       <a href="#" target="_blank" title="Instagram">
-        <img src="../assets/instagra-logo.avif" alt="Instagram">
+        <img src="../assets/instagra-logo.avif" alt="Instagram" style="width:24px;"/>
       </a>
       <a href="#" target="_blank" title="Facebook">
-        <img src="../assets/facebook-logo.avif" alt="Facebook">
+        <img src="../assets/facebook-logo.avif" alt="Facebook" style="width:24px;"/>
       </a>
     </div>
   </footer>
-  
 
   <script type="module" src="../script/cliente.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 </body>
 </html>
-
